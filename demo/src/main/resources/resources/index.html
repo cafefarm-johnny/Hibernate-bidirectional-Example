@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>push</title>
+</head>
+<body>
+    <h1>DATA PUSH!!!!</h1>
+    <input type="button" value="푸시!" id="btn-push">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+$(document).ready(function () {
+    $('#btn-push').on('click', function() {
+        fn_send();
+    });
+});
+
+function fn_send() {
+    let data = {};
+    let person = {'name' : 'Johnny'};
+    let phones = [
+        { 'number' : '010-1234-5678' },
+        { 'number' : '010-0101-0202' },
+        { 'number' : '010-0123-0808' }
+    ];
+
+    data.person = person;
+    data.phone = phones;
+
+    $.ajax({
+        url: '/push',
+        type: 'POST',
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+        data: JSON.stringify(data)
+    })
+    .done(function (obj) {
+        window.alert(obj.msg);
+    })
+    .fail(function (err) {
+        window.alert(JSON.stringify(err));
+        console.log(err);
+    });
+}
+</script>
+</body>
+</html>
